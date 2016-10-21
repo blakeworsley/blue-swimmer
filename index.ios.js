@@ -1,3 +1,4 @@
+import * as firebase from 'firebase';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -5,6 +6,17 @@ import {
   Text,
   View
 } from 'react-native';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDH5BclDnRrnvE1JBfUwKz00b-SocM8ksI",
+  authDomain: "blue-d8d04.firebaseapp.com",
+  databaseURL: "https://blue-d8d04.firebaseio.com",
+  storageBucket: "blue-d8d04.appspot.com",
+  messagingSenderId: "426528791210"
+};
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 
 export default class blueSwimmer extends Component {
   render() {
