@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-
+const SwimmerDashboard = require('./components/SwimmerDashboard');
 const styles = require('./styles.js');
 
 // FIREBASE
@@ -29,6 +29,7 @@ export default class blueSwimmer extends Component {
         <Text style={styles.welcome}>
           Welcome to BlueSwimmer
         </Text>
+        <SwimmerDashboard title="SwimmerDashboard" />
       </View>
     );
   }
