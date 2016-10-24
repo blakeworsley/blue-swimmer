@@ -4,7 +4,8 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
 const SwimmerDashboard = require('./components/SwimmerDashboard');
 const styles = require('./styles.js');
@@ -20,16 +21,43 @@ const styles = require('./styles.js');
   const firebaseApp = firebase.initializeApp(firebaseConfig);
   const rootRef = firebase.database().ref();
   const itemsRef = rootRef.child('items');
+  const provider = new firebase.auth.GoogleAuthProvider();
+
 // END FIREBASE
 
 export default class blueSwimmer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null
+    };
+  }
+
+
+
   render() {
+    const { user } = this.state;
+    if (user) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            Welcome to BlueSwimmer
+          </Text>
+          <SwimmerDashboard title="SwimmerDashboard" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to BlueSwimmer
+          Not Logged In
         </Text>
-        <SwimmerDashboard title="SwimmerDashboard" />
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => {this.setState({user: 'Blake Worsley'})}}
+        >
+          <Text style={styles.button}>Log In</Text>
+        </TouchableHighlight>
       </View>
     );
   }

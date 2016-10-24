@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
   },
   swimmerDashboard: {
     color: 'red',
+  },
+  button: {
+    backgroundColor: 'blue',
+    color: 'white',
+    borderRadius: 10,
+    padding: 10,
   }
 });
 
