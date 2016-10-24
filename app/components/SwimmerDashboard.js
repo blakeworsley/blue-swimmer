@@ -1,10 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import ReactNative from 'react-native';
+import { StyleSheet, Text, View }  from 'react-native';
 const styles = require('../styles.js');
 const constants = styles.constants;
-const { StyleSheet, Text, View } = ReactNative;
 
 class SwimmerDashboard extends Component {
   render() {

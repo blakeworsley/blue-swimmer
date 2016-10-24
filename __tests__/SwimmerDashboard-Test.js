@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import SwimmerDashboard from '../components/SwimmerDashboard';
+import SwimmerDashboard from '../app/components/SwimmerDashboard';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
