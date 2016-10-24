@@ -19,8 +19,9 @@ const styles = require('./styles.js');
     messagingSenderId: "426528791210"
   };
   const firebaseApp = firebase.initializeApp(firebaseConfig);
-  const rootRef = firebase.database().ref();
-  const itemsRef = rootRef.child('items');
+  const rootRef = firebase.database().ref(`teams`);
+  const swimmerRef = rootRef.child('0/team/athletes');
+
   const provider = new firebase.auth.GoogleAuthProvider();
 
 // END FIREBASE
@@ -29,11 +30,23 @@ export default class blueSwimmer extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: null,
+      data: null
     };
   }
 
 
+
+
+  componentDidMount() {
+    rootRef.on('value', (snap) => {
+      console.log(snap);
+    });
+  }
+
+  newSwimmer() {
+    swimmerRef.push({firstName: 'Blake Worsley'});
+  }
 
   render() {
     const { user } = this.state;
@@ -41,7 +54,7 @@ export default class blueSwimmer extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
-            Welcome to BlueSwimmer
+            Welcome to {user}
           </Text>
           <SwimmerDashboard title="SwimmerDashboard" />
         </View>
@@ -54,7 +67,7 @@ export default class blueSwimmer extends Component {
         </Text>
         <TouchableHighlight
           style={styles.button}
-          onPress={() => {this.setState({user: 'Blake Worsley'})}}
+          onPress={() => {this.newSwimmer()}}
         >
           <Text style={styles.button}>Log In</Text>
         </TouchableHighlight>
