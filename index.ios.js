@@ -30,13 +30,9 @@ export default class blueSwimmer extends Component {
   constructor() {
     super();
     this.state = {
-      user: null,
-      data: null
+      user: null
     };
   }
-
-
-
 
   componentDidMount() {
     rootRef.on('value', (snap) => {
