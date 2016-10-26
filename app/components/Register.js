@@ -41,52 +41,75 @@ class Register extends Component {
     );
   }
 
+  focusNextField(nextField){
+    this.refs[nextField].focus();
+  }
+
   render() {
     return (
       <View style={styles.containerCenter}>
         <View style={styles.containerCenter}>
           <TextInput
+            ref="1"
             style={styles.newUserInput}
             onChangeText={(firstName) => this.setState({firstName})}
             value={this.state.firstName}
             placeholder="First Name"
             returnKeyType="next"
-            required="true"
-            
+            onSubmitEditing={() => {
+              if(this.state.firstName){
+                return this.focusNextField('2')
+              } else {
+                return alert('Must Enter UserName')
+              }
+            }}
+            blurOnSubmit={false}
           />
           <TextInput
+            ref="2"
             style={styles.newUserInput}
             onChangeText={(lastName) => this.setState({lastName})}
             value={this.state.lastName}
             placeholder="Last Name"
             returnKeyType="next"
-            required="true"
+            onSubmitEditing={() => this.focusNextField('3')}
+            blurOnSubmit={false}
           />
           <TextInput
+            ref="3"
             style={styles.newUserInput}
             onChangeText={(emailAddress) => this.setState({emailAddress})}
             value={this.state.emailAddress}
             placeholder="Email Address"
             keyboardType="email-address"
             returnKeyType="next"
-            required="true"
-            autoCapitalize='none'
+            onSubmitEditing={() => this.focusNextField('4')}
+            blurOnSubmit={false}
+            autoCapitalize="none"
           />
           <TextInput
+            ref="4"
             style={styles.newUserInput}
             onChangeText={(password) => this.setState({password})}
             value={this.state.password}
             placeholder="Password"
             returnKeyType="next"
-            required="true"
+            onSubmitEditing={() => this.focusNextField('5')}
+            blurOnSubmit={false}
+            secureTextEntry={true}
           />
           <TextInput
+            ref="5"
             style={styles.newUserInput}
             onChangeText={(teamName) => this.setState({teamName})}
             value={this.state.teamName}
             placeholder="Team Name"
             returnKeyType="done"
-            required="true"
+            onSubmitEditing={() => {
+              if (this.state)
+              this.handleNewUser();
+              this.goToSwimmerDashboard();
+            }}
           />
           <TouchableHighlight
             style={styles.button}
