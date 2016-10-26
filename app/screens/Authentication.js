@@ -21,8 +21,8 @@ export default class Authentication extends Component {
 
   goToRegister() {
     this.props.navigator.push({
-      component: SwimmerDashboard,
-      title: 'Dashboard'
+      component: Register,
+      title: 'Register'
     });
   }
 
@@ -31,17 +31,6 @@ export default class Authentication extends Component {
   }
 
   render() {
-    const { user } = this.state;
-    if (user) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to {user}
-          </Text>
-          <SwimmerDashboard title="SwimmerDashboard" />
-        </View>
-      );
-    }
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -50,16 +39,16 @@ export default class Authentication extends Component {
         <TouchableHighlight
           style={styles.button}
           onPress={() => {
-            this.newSwimmer()
             this.setState({ user: 'Blake Worsley' })
-            this.goToRegister()
           }}
         >
           <Text style={styles.button}>Log In</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.button}
-          onPress={() => {}}
+          onPress={() => {
+            this.goToRegister()
+          }}
         >
           <Text style={styles.button}>Register</Text>
         </TouchableHighlight>

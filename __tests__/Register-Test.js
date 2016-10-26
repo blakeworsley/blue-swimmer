@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { View } from 'react-native';
 import Register from '../app/components/Register';
 import { shallow } from 'enzyme';

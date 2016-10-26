@@ -12,17 +12,33 @@ const styles = StyleSheet.create({
     backgroundColor: constants.gradientColor,
   },
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
     margin: 10,
+    textAlign: 'center',
+    fontSize: 20,
   },
   swimmerDashboard: {
-    color: 'red',
+    color: 'white',
   },
   button: {
-    backgroundColor: 'blue',
-    borderRadius: 10,
     padding: 5,
+    borderRadius: 50,
+    backgroundColor: 'rgba(56, 240, 255, 0.77)',
+    color: 'white',
+  },
+  containerCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#259DF6',
+  },
+  newUserInput: {
+    height: 40,
+    width: 250,
+    borderRadius: 10,
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#1F87E3',
+    color: 'white',
   }
 });
 
