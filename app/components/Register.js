@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Navigator, StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
+import firebase from '../firebase';
+import SwimmerDashboard from './SwimmerDashboard';
 const styles = require('../styles.js');
 const constants = styles.constants;
 
@@ -17,9 +19,13 @@ class Register extends Component {
 
   goToSwimmerDashboard() {
     this.props.navigator.push({
-      component: Authorization,
-      title: 'Authorization'
+      component: SwimmerDashboard,
+      title: 'SwimmerDashboard'
     });
+  }
+
+  handleNewUser() {
+    firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password);
   }
 
   render() {
@@ -64,7 +70,10 @@ class Register extends Component {
           />
           <TouchableHighlight
             style={styles.button}
-            onPress={() => {}}
+            onPress={() => {
+              this.goToSwimmerDashboard();
+              this.handleNewUser();
+            }}
           >
             <Text style={styles.button}>Register</Text>
           </TouchableHighlight>
@@ -75,11 +84,3 @@ class Register extends Component {
 }
 
 module.exports = Register;
-
-
-
-// First Name
-// Last Name
-// Email Address
-// Password
-// Team Name

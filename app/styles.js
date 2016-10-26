@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 50,
     backgroundColor: 'rgba(56, 240, 255, 0.77)',
-    color: 'white',
   },
   containerCenter: {
     flex: 1,
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: '#1F87E3',
-    color: 'white',
   }
 });
 
