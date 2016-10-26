@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
-import firebase from '../firebase';
+import firebase, { usersRef } from '../firebase';
 import SwimmerDashboard from './SwimmerDashboard';
 const styles = require('../styles.js');
 const constants = styles.constants;
@@ -25,7 +25,20 @@ class Register extends Component {
   }
 
   handleNewUser() {
-    firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password);
+    firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password)
+      .then(() => { firebase.database().ref('users').push({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          emailAddress: this.state.emailAddress,
+          teamName: this.state.teamName,
+        });
+      })
+      .catch(function(error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      }
+    );
   }
 
   render() {
@@ -38,6 +51,8 @@ class Register extends Component {
             value={this.state.firstName}
             placeholder="First Name"
             returnKeyType="next"
+            required="true"
+            
           />
           <TextInput
             style={styles.newUserInput}
@@ -45,6 +60,7 @@ class Register extends Component {
             value={this.state.lastName}
             placeholder="Last Name"
             returnKeyType="next"
+            required="true"
           />
           <TextInput
             style={styles.newUserInput}
@@ -53,6 +69,8 @@ class Register extends Component {
             placeholder="Email Address"
             keyboardType="email-address"
             returnKeyType="next"
+            required="true"
+            autoCapitalize='none'
           />
           <TextInput
             style={styles.newUserInput}
@@ -60,6 +78,7 @@ class Register extends Component {
             value={this.state.password}
             placeholder="Password"
             returnKeyType="next"
+            required="true"
           />
           <TextInput
             style={styles.newUserInput}
@@ -67,12 +86,14 @@ class Register extends Component {
             value={this.state.teamName}
             placeholder="Team Name"
             returnKeyType="done"
+            required="true"
           />
           <TouchableHighlight
             style={styles.button}
             onPress={() => {
-              this.goToSwimmerDashboard();
+              if (this.state)
               this.handleNewUser();
+              this.goToSwimmerDashboard();
             }}
           >
             <Text style={styles.button}>Register</Text>

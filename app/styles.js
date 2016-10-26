@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: '#1F87E3',
+  },
+  newUserInput2: {
+    backgroundColor: 'red',
   }
 });
 

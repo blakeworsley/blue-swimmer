@@ -1,4 +1,4 @@
-import firebase, { rootRef, swimmerRef, provider } from '../firebase';
+import firebase, { teamRef, swimmerRef, provider } from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 const SwimmerDashboard = require('../components/SwimmerDashboard');
@@ -14,7 +14,7 @@ export default class Authentication extends Component {
   }
 
   componentDidMount() {
-    rootRef.on('value', (snap) => {
+    teamRef.on('value', (snap) => {
       console.log(snap);
     });
   }
