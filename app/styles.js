@@ -38,9 +38,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#1F87E3',
   },
-  newUserInput2: {
-    backgroundColor: 'red',
-  }
 });
 
 module.exports = styles;

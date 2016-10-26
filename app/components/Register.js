@@ -13,14 +13,14 @@ class Register extends Component {
       lastName: null,
       emailAddress: null,
       password: null,
-      teamName: null
+      teamName: null,
     };
   }
 
   goToSwimmerDashboard() {
     this.props.navigator.push({
       component: SwimmerDashboard,
-      title: 'SwimmerDashboard'
+      title: 'SwimmerDashboard',
     });
   }
 
