@@ -45,6 +45,16 @@ class Register extends Component {
     this.refs[nextField].focus();
   }
 
+  checkForFullFields(){
+    if(this.state.firstName === null ||
+      this.state.lastName === null ||
+      this.state.emailAddress === null ||
+      this.state.password === null ||
+      this.state.teamName === null
+    ) { return false; }
+    else { return true; }
+  }
+
   render() {
     return (
       <View style={styles.containerCenter}>
@@ -105,18 +115,15 @@ class Register extends Component {
             value={this.state.teamName}
             placeholder="Team Name"
             returnKeyType="done"
-            onSubmitEditing={() => {
-              if (this.state)
-              this.handleNewUser();
-              this.goToSwimmerDashboard();
-            }}
           />
           <TouchableHighlight
             style={styles.button}
             onPress={() => {
-              if (this.state)
-              this.handleNewUser();
-              this.goToSwimmerDashboard();
+              if(this.checkForFullFields()){
+                this.handleNewUser();
+                this.goToSwimmerDashboard();
+              }
+              else { alert('Please complete all fields before submitting')}
             }}
           >
             <Text style={styles.button}>Register</Text>
