@@ -16,15 +16,14 @@ export default class Authentication extends Component {
   }
 
   componentDidMount() {
-    teamRef.on('value', (snap) => {
-      console.log(snap);
-    });
+    firebase.auth().onAuthStateChanged( user => { this.setState({user}); });
+    teamRef.on('value', (snap) => { console.log(snap); });
   }
 
   goToRegister() {
     this.props.navigator.push({
       component: Register,
-      title: 'Register'
+      title: 'Register',
     });
   }
 
@@ -72,7 +71,7 @@ export default class Authentication extends Component {
             style={styles.button}
             onPress={() => {this.login()} }
           >
-            <Text style={styles.button}>Log In</Text>
+            <Text style={styles.buttonText}>Log In</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
@@ -80,7 +79,7 @@ export default class Authentication extends Component {
               this.goToRegister()
             }}
           >
-            <Text style={styles.button}>Register</Text>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableHighlight>
         </View>
       </View>

@@ -20,9 +20,13 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    padding: 5,
+    padding: 10,
+    margin: 5,
     borderRadius: 50,
     backgroundColor: 'rgba(56, 240, 255, 0.77)',
+  },
+  buttonText: {
+    color: 'white',
   },
   containerCenter: {
     flex: 1,
