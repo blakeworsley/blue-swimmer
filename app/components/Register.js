@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, TextInput, ScrollView } from 'react-native';
 import firebase, { usersRef } from '../firebase';
 import SwimmerDashboard from './SwimmerDashboard';
 const styles = require('../styles.js');
@@ -13,14 +13,14 @@ class Register extends Component {
       lastName: null,
       emailAddress: null,
       password: null,
-      teamName: null
+      teamName: null,
     };
   }
 
   goToSwimmerDashboard() {
     this.props.navigator.push({
       component: SwimmerDashboard,
-      title: 'SwimmerDashboard'
+      title: 'SwimmerDashboard',
     });
   }
 
@@ -58,7 +58,7 @@ class Register extends Component {
   render() {
     return (
       <View style={styles.containerCenter}>
-        <View style={styles.containerCenter}>
+        <ScrollView style={{marginTop: 100}}>
           <TextInput
             ref="1"
             style={styles.newUserInput}
@@ -115,8 +115,11 @@ class Register extends Component {
             value={this.state.teamName}
             placeholder="Team Name"
             returnKeyType="done"
+            onSubmitEditing={() => this.focusNextField('6')}
+
           />
           <TouchableHighlight
+            ref="6"
             style={styles.button}
             onPress={() => {
               if(this.checkForFullFields()){
@@ -126,9 +129,9 @@ class Register extends Component {
               else { alert('Please complete all fields before submitting')}
             }}
           >
-            <Text style={styles.button}>Register</Text>
+            <Text>Register</Text>
           </TouchableHighlight>
-        </View>
+        </ScrollView>
       </View>
     )
   }
