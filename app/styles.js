@@ -1,7 +1,7 @@
 const React = require('react-native');
 const { StyleSheet } = React;
 const constants = {
-  gradientColor: '#F6FCFF'
+  gradientColor: '#2BA8F7'
 };
 
 const styles = StyleSheet.create({
