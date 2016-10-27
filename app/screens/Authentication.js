@@ -34,8 +34,9 @@ export default class Authentication extends Component {
     });
   }
 
-  newSwimmer() {
-    swimmerRef.push({firstName: 'Blake Worsley'});
+  checkForFullFields(){
+    if(this.state.emailAddress === null || this.state.password === null) { return false; }
+    else { return true; }
   }
 
   login() {
@@ -69,7 +70,10 @@ export default class Authentication extends Component {
           />
           <TouchableHighlight
             style={styles.button}
-            onPress={() => {this.login()} }
+            onPress={() => {
+              if(this.checkForFullFields()){ this.login(); }
+              else { alert('Please complete all fields before submitting'); }
+            }}
           >
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableHighlight>
