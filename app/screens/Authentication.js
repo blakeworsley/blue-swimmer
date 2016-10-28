@@ -34,12 +34,16 @@ export default class Authentication extends Component {
     });
   }
 
-  newSwimmer() {
-    swimmerRef.push({firstName: 'Blake Worsley'});
+  checkForFullFields(){
+    if(this.state.emailAddress === null || this.state.password === null) { return false; }
+    else { return true; }
   }
 
   login() {
     firebase.auth().signInWithEmailAndPassword(this.state.emailAddress, this.state.password)
+      .catch(() => {
+        alert('Invalid credentials. Please check that you are using a valid email and password.');
+      })
       .then(this.goToSwimmerDashboard());
   }
 
@@ -69,7 +73,10 @@ export default class Authentication extends Component {
           />
           <TouchableHighlight
             style={styles.button}
-            onPress={() => {this.login()} }
+            onPress={() => {
+              if(this.checkForFullFields()){ this.login(); }
+              else { alert('Please complete all fields before submitting'); }
+            }}
           >
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableHighlight>

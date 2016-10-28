@@ -126,7 +126,7 @@ class Register extends Component {
                 this.handleNewUser();
                 this.goToSwimmerDashboard();
               }
-              else { alert('Please complete all fields before submitting')}
+              else { alert('Please complete all fields before submitting') }
             }}
           >
             <Text>Register</Text>
