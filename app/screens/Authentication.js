@@ -41,6 +41,9 @@ export default class Authentication extends Component {
 
   login() {
     firebase.auth().signInWithEmailAndPassword(this.state.emailAddress, this.state.password)
+      .catch(() => {
+        alert('Invalid credentials. Please check that you are using a valid email and password.');
+      })
       .then(this.goToSwimmerDashboard());
   }
 
