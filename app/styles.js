@@ -9,7 +9,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: constants.gradientColor,
+  },
+  waveImage: {
+    flex: 1,
+    width: null,
+    height: null,
   },
   welcome: {
     margin: 10,
