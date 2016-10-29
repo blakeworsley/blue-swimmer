@@ -17,7 +17,7 @@ export default class Authentication extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged( user => { this.setState({user}); });
-    teamRef.on('value', (snap) => { console.log(snap); });
+    teamRef.on('value', (snap) => { console.log(snap); })
   }
 
   goToRegister() {

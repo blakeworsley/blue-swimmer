@@ -20,7 +20,6 @@ class Register extends Component {
   goToSwimmerDashboard() {
     return(
       <SwimmerDashboard title="yo">
-
       </SwimmerDashboard>
     );
   }
