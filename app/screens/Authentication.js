@@ -16,8 +16,8 @@ export default class Authentication extends Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged( user => { this.setState({user}); });
-    teamRef.on('value', (snap) => { console.log(snap); })
+    firebase.auth().onAuthStateChanged( user => { if(user){this.goToSwimmerDashboard();} });
+      teamRef.on('value', (snap) => { console.log(snap); });
   }
 
   goToRegister() {
@@ -31,6 +31,7 @@ export default class Authentication extends Component {
     this.props.navigator.push({
       component: SwimmerDashboard,
       title: 'SwimmerDashboard',
+      user: this.state.user
     });
   }
 

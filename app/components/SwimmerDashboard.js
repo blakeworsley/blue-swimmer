@@ -1,5 +1,6 @@
 'use strict';
 
+import firebase, { teamRef, swimmerRef, provider } from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight }  from 'react-native';
 const styles = require('../styles.js');
@@ -12,11 +13,22 @@ class SwimmerDashboard extends Component {
        physical: null,
        mental: null,
        effort: null,
-       date: Date.now()
+       date: Date.now(),
+       user: null,
      };
    }
+
+   componentDidMount(){
+     this.setState({ user: this.props.user });
+     console.log('props' + this.props.user, 'state' + this.state.user);
+   }
+
    focusNextField(nextField){
      this.refs[nextField].focus();
+   }
+
+   pushSwimmerData(){
+
    }
 
    render() {
@@ -63,7 +75,7 @@ class SwimmerDashboard extends Component {
             ref="submit"
             style={styles.button}
           >
-          <Text>Submit</Text>
+            <Text>Submit</Text>
           </TouchableHighlight>
       </View>
     );
