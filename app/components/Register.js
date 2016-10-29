@@ -26,19 +26,16 @@ class Register extends Component {
 
   handleNewUser() {
     firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password)
+      .catch(() => {
+        alert('All fields required. Make sure password is at least 6 characters.');
+      })
       .then(() => { firebase.database().ref('users').push({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           emailAddress: this.state.emailAddress,
           teamName: this.state.teamName,
         });
-      })
-      .catch(function(error) {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      }
-    );
+      });
   }
 
   focusNextField(nextField){
@@ -49,7 +46,7 @@ class Register extends Component {
     if(this.state.firstName === null ||
       this.state.lastName === null ||
       this.state.emailAddress === null ||
-      this.state.password === null ||
+      this.state.password.length >= 6 ||
       this.state.teamName === null
     ) { return false; }
     else { return true; }
