@@ -18,10 +18,11 @@ class Register extends Component {
   }
 
   goToSwimmerDashboard() {
-    this.props.navigator.push({
-      component: SwimmerDashboard,
-      title: 'SwimmerDashboard',
-    });
+    return(
+      <SwimmerDashboard title="yo">
+
+      </SwimmerDashboard>
+    );
   }
 
   handleNewUser() {
