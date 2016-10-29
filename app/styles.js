@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   waveImage: {
+    marginTop: 70,
     flex: 1,
     width: null,
     height: null,
