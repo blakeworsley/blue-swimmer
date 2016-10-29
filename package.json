@@ -10,9 +10,6 @@
     "firebase": "^3.5.1",
     "react": "15.3.2",
     "react-native": "0.35.0",
-    "react-native-rating-star": "^0.2.1",
-    "react-native-star-rating": "^1.0.6",
-    "react-native-vector-icons": "^3.0.0"
   },
   "jest": {
     "preset": "jest-react-native"
