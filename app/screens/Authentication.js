@@ -16,8 +16,12 @@ export default class Authentication extends Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged( user => { if(user){this.goToSwimmerDashboard();} });
-      teamRef.on('value', (snap) => { console.log(snap); });
+    firebase.auth().onAuthStateChanged( user => {
+      if(user){
+        this.setState({user: user});
+        this.goToSwimmerDashboard(user);
+      }
+    });
   }
 
   goToRegister() {
@@ -27,11 +31,12 @@ export default class Authentication extends Component {
     });
   }
 
-  goToSwimmerDashboard() {
+  goToSwimmerDashboard(user) {
+    console.log(user);
     this.props.navigator.push({
       component: SwimmerDashboard,
       title: 'SwimmerDashboard',
-      user: this.state.user
+      user: user
     });
   }
 
@@ -90,6 +95,7 @@ export default class Authentication extends Component {
             >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableHighlight>
+
           </View>
         </View>
       </Image>

@@ -1,6 +1,6 @@
 'use strict';
 
-import firebase, { teamRef, swimmerRef, provider } from '../firebase';
+import firebase from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight }  from 'react-native';
 const styles = require('../styles.js');
@@ -12,15 +12,23 @@ class SwimmerDashboard extends Component {
      this.state = {
        physical: null,
        mental: null,
-       effort: null,
+       performance: null,
        date: Date.now(),
        user: null,
+       title: this.props.title
      };
    }
 
-   componentDidMount(){
-     this.setState({ user: this.props.user });
-     console.log('props' + this.props.user, 'state' + this.state.user);
+   firebase.auth().onAuthStateChanged( user => {
+     if(user){
+       this.setState({user: user});
+       this.goToSwimmerDashboard(user);
+     }
+   });
+
+   get reference(){
+     firebase.database()
+      .ref(`teams/${teamPosition}/${team}/athletes/${currentUserId}/${uid}/days`);
    }
 
    focusNextField(nextField){
@@ -28,7 +36,14 @@ class SwimmerDashboard extends Component {
    }
 
    pushSwimmerData(){
-
+     reference.push({
+       date: this.state.date,
+       feedback: {
+         mental: 4,
+         physical: 5,
+         performance: 5
+       }
+     });
    }
 
    render() {
@@ -39,7 +54,7 @@ class SwimmerDashboard extends Component {
           <TextInput
             ref="1"
             style={styles.newUserInput}
-            onChangeText={(raiting) => this.setState({raiting})}
+            onChangeText={(rating) => this.setState({physical: rating})}
             value={this.state.physical}
             placeholder="Rating between 1 and 5"
             keyboardType="numeric"
@@ -51,7 +66,7 @@ class SwimmerDashboard extends Component {
           <TextInput
             ref="2"
             style={styles.newUserInput}
-            onChangeText={(raiting) => this.setState({raiting})}
+            onChangeText={(rating) => this.setState({mental: rating})}
             value={this.state.mental}
             placeholder="Rating between 1 and 5"
             keyboardType="numeric"
@@ -63,8 +78,8 @@ class SwimmerDashboard extends Component {
           <TextInput
             ref="2"
             style={styles.newUserInput}
-            onChangeText={(raiting) => this.setState({raiting})}
-            value={this.state.effort}
+            onChangeText={(rating) => this.setState({performance: rating})}
+            value={this.state.performance}
             placeholder="Rating between 1 and 5"
             keyboardType="numeric"
             returnKeyType="done"
@@ -77,6 +92,18 @@ class SwimmerDashboard extends Component {
           >
             <Text>Submit</Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => console.log(this.state.user)}
+          >
+            <Text>Sign Out</Text>
+          </TouchableHighlight>
+          <Text>{this.state.physical}</Text>
+          <Text>{this.state.mental}</Text>
+          <Text>{this.state.performance}</Text>
+          <Text>{this.state.title}</Text>
+          <Text>{this.state.date}</Text>
+
       </View>
     );
   }
