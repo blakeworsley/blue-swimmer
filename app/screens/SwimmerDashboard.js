@@ -14,17 +14,18 @@ class SwimmerDashboard extends Component {
        mental: null,
        performance: null,
        date: Date.now(),
-       user: null,
+       userID: this.props.user,
        title: this.props.title
      };
    }
 
-   firebase.auth().onAuthStateChanged( user => {
-     if(user){
-       this.setState({user: user});
-       this.goToSwimmerDashboard(user);
-     }
-   });
+   componentDidMount() {
+     firebase.auth().onAuthStateChanged( user => {
+       if(user){
+         this.setState({user: user.uid});
+       }
+     });
+   }
 
    get reference(){
      firebase.database()
@@ -94,7 +95,9 @@ class SwimmerDashboard extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => console.log(this.state.user)}
+            onPress={() => {
+              firebase.auth().signOut();
+            }}
           >
             <Text>Sign Out</Text>
           </TouchableHighlight>

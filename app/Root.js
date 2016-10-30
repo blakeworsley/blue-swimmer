@@ -1,7 +1,8 @@
+import firebase from './firebase';
 import React, { Component } from 'react';
 import { NavigatorIOS, StyleSheet } from 'react-native';
 import Authentication from './screens/Authentication';
-import SwimmerDashboard from './components/SwimmerDashboard';
+import SwimmerDashboard from './screens/SwimmerDashboard';
 const styles = require('./styles.js');
 
 export default class blueSwimmer extends Component {
@@ -18,7 +19,7 @@ export default class blueSwimmer extends Component {
         ref="navigator"
         initialRoute={
           (this.state.user ?
-            { component: SwimmerDashboard, title: 'Welcome' } :
+            { component: SwimmerDashboard, title: 'Welcome', user: this.state.user } :
             { component: Authentication, title: 'Sign In' }
           )
         }

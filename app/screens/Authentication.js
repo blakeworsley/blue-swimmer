@@ -1,8 +1,8 @@
 import firebase, { teamRef, swimmerRef, provider } from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, TextInput, Image } from 'react-native';
-const SwimmerDashboard = require('../components/SwimmerDashboard');
-const Register = require('../components/Register');
+const SwimmerDashboard = require('./SwimmerDashboard');
+const Register = require('./Register');
 const styles = require('../styles.js');
 
 export default class Authentication extends Component {
@@ -15,15 +15,6 @@ export default class Authentication extends Component {
     };
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged( user => {
-      if(user){
-        this.setState({user: user});
-        this.goToSwimmerDashboard(user);
-      }
-    });
-  }
-
   goToRegister() {
     this.props.navigator.push({
       component: Register,
@@ -32,7 +23,6 @@ export default class Authentication extends Component {
   }
 
   goToSwimmerDashboard(user) {
-    console.log(user);
     this.props.navigator.push({
       component: SwimmerDashboard,
       title: 'SwimmerDashboard',
