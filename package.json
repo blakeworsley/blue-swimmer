@@ -9,7 +9,11 @@
   "dependencies": {
     "firebase": "^3.5.1",
     "react": "15.3.2",
+<<<<<<< HEAD
     "react-native": "0.35.0"
+=======
+    "react-native": "0.35.0",
+>>>>>>> d6194e6157bfbaccafeb5a5ee54e3a9dd3a50e44
   },
   "jest": {
     "preset": "jest-react-native"
