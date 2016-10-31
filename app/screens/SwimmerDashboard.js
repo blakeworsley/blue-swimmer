@@ -40,9 +40,9 @@ class SwimmerDashboard extends Component {
      reference.push({
        date: this.state.date,
        feedback: {
-         mental: 4,
-         physical: 5,
-         performance: 5
+         mental: this.state.mental,
+         physical: this.state.physical,
+         performance: this.state.performance
        }
      });
    }

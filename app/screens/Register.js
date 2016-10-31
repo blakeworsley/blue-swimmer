@@ -25,16 +25,25 @@ class Register extends Component {
 
   handleNewUser() {
     firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password)
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         alert('All fields required. Make sure password is at least 6 characters.');
       })
       .then(() => { firebase.database().ref('users').push({
+          emailAddress: this.state.emailAddress,
           firstName: this.state.firstName,
           lastName: this.state.lastName,
-          emailAddress: this.state.emailAddress,
           teamName: this.state.teamName,
-        });
+        })
+      })
+      .then(() => {
+        firebase.database().ref(`teams/${this.state.teamName.toLowerCase().trim()}/athletes/`).push({
+          emailAddress: this.state.emailAddress,
+          firstName:    this.state.firstName,
+          lastName:     this.state.lastName,
+          teamName:     this.state.teamName
       });
+    })
   }
 
   focusNextField(nextField){
@@ -62,13 +71,7 @@ class Register extends Component {
             value={this.state.firstName}
             placeholder="First Name"
             returnKeyType="next"
-            onSubmitEditing={() => {
-              if(this.state.firstName){
-                return this.focusNextField('2')
-              } else {
-                return alert('Must Enter UserName')
-              }
-            }}
+            onSubmitEditing={() => this.focusNextField('2')}
             blurOnSubmit={false}
           />
           <TextInput
@@ -118,15 +121,19 @@ class Register extends Component {
             ref="6"
             style={styles.button}
             onPress={() => {
-              if(this.checkForFullFields()){
                 this.handleNewUser();
                 this.goToSwimmerDashboard();
-              }
-              else { alert('Please complete all fields before submitting') }
             }}
           >
             <Text>Register</Text>
           </TouchableHighlight>
+          <Text>
+            {this.state.firstName}
+            {this.state.lastName}
+            {this.state.emailAddress}
+            {this.state.password}
+            {this.state.teamName}
+            </Text>
         </ScrollView>
       </View>
     )
