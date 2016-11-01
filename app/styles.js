@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   waveImage: {
-    marginTop: 70,
     flex: 1,
     width: null,
     height: null,
@@ -47,6 +46,17 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#1F87E3',
   },
+  regularFont: {
+    fontSize: 14,
+    color: '#fff',
+    backgroundColor: 'transparent'
+  },
+  h1Font: {
+    padding: 5,
+    fontSize: 18,
+    color: '#3c2eb0',
+    backgroundColor: 'transparent'
+  }
 });
 
 module.exports = styles;

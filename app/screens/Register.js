@@ -6,14 +6,14 @@ const styles = require('../styles.js');
 const constants = styles.constants;
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: null,
       lastName: null,
-      emailAddress: null,
+      emailAddress: this.props.emailAddress,
       password: null,
-      teamName: null,
+      teamName: null
     };
   }
 
@@ -24,17 +24,32 @@ class Register extends Component {
   }
 
   handleNewUser() {
-    firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password)
-      .catch(() => {
-        alert('All fields required. Make sure password is at least 6 characters.');
+    const { firstName, lastName, emailAddress, password, teamName } = this.state
+    const currentUser = firebase.auth().currentUser
+
+    firebase.auth().createUserWithEmailAndPassword(emailAddress, password)
+    .catch(() => {
+      alert('All fields required. Make sure password is at least 6 characters.');
+    })
+    .then(() => {
+      firebase.database().ref('users').push({
+        emailAddress: emailAddress,
+        firstName: firstName,
+        lastName: lastName,
+        teamName: teamName
       })
-      .then(() => { firebase.database().ref('users').push({
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          emailAddress: this.state.emailAddress,
-          teamName: this.state.teamName,
-        });
+    })
+    .then(() => {
+      firebase.database().ref(`teams/${teamName.toLowerCase()}/athletes/`).push({
+        emailAddress: emailAddress,
+        firstName: firstName,
+        lastName: lastName,
+        teamName: teamName,
       });
+    })
+    .then(() => {
+      this.goToSwimmerDashboard();
+    });
   }
 
   focusNextField(nextField){
@@ -53,7 +68,6 @@ class Register extends Component {
 
   render() {
     return (
-      <View style={styles.containerCenter}>
         <ScrollView style={{marginTop: 100}}>
           <TextInput
             ref="1"
@@ -62,13 +76,7 @@ class Register extends Component {
             value={this.state.firstName}
             placeholder="First Name"
             returnKeyType="next"
-            onSubmitEditing={() => {
-              if(this.state.firstName){
-                return this.focusNextField('2')
-              } else {
-                return alert('Must Enter UserName')
-              }
-            }}
+            onSubmitEditing={() => this.focusNextField('2')}
             blurOnSubmit={false}
           />
           <TextInput
@@ -117,18 +125,17 @@ class Register extends Component {
           <TouchableHighlight
             ref="6"
             style={styles.button}
-            onPress={() => {
-              if(this.checkForFullFields()){
-                this.handleNewUser();
-                this.goToSwimmerDashboard();
-              }
-              else { alert('Please complete all fields before submitting') }
-            }}
+            onPress={() => this.handleNewUser() }
           >
             <Text>Register</Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.props.back() }
+          >
+            <Text>Back</Text>
+          </TouchableHighlight>
         </ScrollView>
-      </View>
     )
   }
 }
