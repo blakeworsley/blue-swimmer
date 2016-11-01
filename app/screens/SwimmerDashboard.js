@@ -50,7 +50,8 @@ class SwimmerDashboard extends Component {
       console.log('USER: ' + this.state.user),
       <View style={styles.container}>
         <Text style={styles.swimmerDashboard}>{this.props.title}</Text>
-        <Text>Physical</Text>
+        <Text style={styles.regularFont}>{this.state.user ? 'Welcome ' + this.state.user.firstName : null}</Text>
+        <Text style={styles.regularFont}>Physical</Text>
         <TextInput
           ref="1"
           style={styles.newUserInput}
@@ -62,7 +63,7 @@ class SwimmerDashboard extends Component {
           onSubmitEditing={() => this.focusNextField('2')}
           autoCapitalize="none"
         />
-        <Text>Mental</Text>
+        <Text style={styles.regularFont}>Mental</Text>
         <TextInput
           ref="2"
           style={styles.newUserInput}
@@ -74,7 +75,7 @@ class SwimmerDashboard extends Component {
           onSubmitEditing={() => this.focusNextField('3')}
           autoCapitalize="none"
         />
-        <Text>Effort</Text>
+        <Text style={styles.regularFont}>Effort</Text>
         <TextInput
           ref="2"
           style={styles.newUserInput}
@@ -100,12 +101,12 @@ class SwimmerDashboard extends Component {
         >
           <Text>Sign Out</Text>
         </TouchableHighlight>
-        <Text>Physical: {this.state.physical || 'N/A'}</Text>
-        <Text>Mental: {this.state.mental || 'N/A'}</Text>
-        <Text>Performance: {this.state.performance || 'N/A'}</Text>
-        <Text>Date: {this.state.date}</Text>
-        <Text>Current User: {this.props.user.email}</Text>
-        <Text>Current User: {this.state.user ? this.state.user.firstName : 'N/A'}</Text>
+
+        <Text style={styles.regularFont}>Physical: {this.state.physical || 'N/A'}</Text>
+        <Text style={styles.regularFont}>Mental: {this.state.mental || 'N/A'}</Text>
+        <Text style={styles.regularFont}>Performance: {this.state.performance || 'N/A'}</Text>
+        <Text style={styles.regularFont}>Date: {this.state.date}</Text>
+        <Text style={styles.regularFont}>Current User: {this.props.user.email}</Text>
 
       </View>
     );

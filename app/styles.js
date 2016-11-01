@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#1F87E3',
   },
+  regularFont: {
+    fontSize: 14,
+    color: '#fff',
+    backgroundColor: 'transparent'
+  }
 });
 
 module.exports = styles;
