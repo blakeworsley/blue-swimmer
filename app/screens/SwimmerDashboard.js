@@ -24,7 +24,7 @@ class SwimmerDashboard extends Component {
       let users = snapshot.val();
       split(users).map(user => {
         if (user.value.emailAddress === this.props.user.email) {
-          users = Object.assign({ key: user.key }, user.value);
+          users = Object.assign({ id: user.key }, user.value);
         }
       });
       this.setState({user: users});
@@ -33,7 +33,7 @@ class SwimmerDashboard extends Component {
 
   sendData() {
     const { physical, mental, performance, date, user } = this.state;
-    firebase.database().ref(`workouts/${user.teamName}/${user.key}/${date}`).push({
+    firebase.database().ref(`workouts/${user.teamName}/${user.id}/${date}`).push({
       physical,
       mental,
       performance
