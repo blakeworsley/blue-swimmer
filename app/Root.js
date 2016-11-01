@@ -1,6 +1,6 @@
 import firebase from './firebase';
 import React, { Component } from 'react';
-import { NavigatorIOS, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import Authentication from './screens/Authentication';
 import SwimmerDashboard from './screens/SwimmerDashboard';
 const styles = require('./styles.js');
@@ -13,18 +13,20 @@ export default class blueSwimmer extends Component {
     };
   }
 
-  render() {
-    return(
-      <NavigatorIOS
-        ref="navigator"
-        initialRoute={
-          (this.state.user ?
-            { component: SwimmerDashboard, title: 'Welcome', user: this.state.user } :
-            { component: Authentication, title: 'Sign In' }
-          )
-        }
-        style={{flex: 1}}
-      />
-    )
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {this.setState({user}); });
   }
+
+  render() {
+    const {user} = this.state;
+
+    return(
+      <Image source={require('./img/wave_background.png')} style={styles.waveImage}>
+        <View style={styles.container}>
+          {user ? <SwimmerDashboard user={user} /> : <Authentication />}
+        </View>
+      </Image>
+    );
+  }
+
 }

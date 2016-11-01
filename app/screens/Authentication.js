@@ -45,8 +45,6 @@ export default class Authentication extends Component {
 
   render() {
     return (
-      <Image source={require('../img/wave_background.png')} style={styles.waveImage}>
-        <View style={styles.container}>
           <View style={styles.container}>
             <TextInput
               ref="1"
@@ -87,8 +85,6 @@ export default class Authentication extends Component {
             </TouchableHighlight>
 
           </View>
-        </View>
-      </Image>
 
     );
   }

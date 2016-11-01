@@ -14,7 +14,7 @@ class SwimmerDashboard extends Component {
        mental: null,
        performance: null,
        date: Date.now(),
-       userID: this.props.user,
+       user: this.props.user,
        title: this.props.title
      };
    }
@@ -106,7 +106,7 @@ class SwimmerDashboard extends Component {
           <Text>{this.state.performance}</Text>
           <Text>{this.state.title}</Text>
           <Text>{this.state.date}</Text>
-
+          <Text>Current User: {this.props.user.email}</Text>
       </View>
     );
   }
