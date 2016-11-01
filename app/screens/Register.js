@@ -129,6 +129,12 @@ class Register extends Component {
           >
             <Text>Register</Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.props.back() }
+          >
+            <Text>Back</Text>
+          </TouchableHighlight>
         </ScrollView>
     )
   }

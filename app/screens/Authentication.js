@@ -36,7 +36,7 @@ export default class Authentication extends Component {
 
   render() {
     if(this.state.register) {
-      return( <Register emailAddress={this.state.emailAddress} /> );
+      return( <Register emailAddress={this.state.emailAddress} back={this.toggleRegisterComponent}/> );
       };
     return (
       <View style={styles.container}>
