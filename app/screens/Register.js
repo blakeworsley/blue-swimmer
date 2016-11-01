@@ -36,7 +36,8 @@ class Register extends Component {
         emailAddress: emailAddress,
         firstName: firstName,
         lastName: lastName,
-        teamName: teamName
+        teamName: teamName,
+        type: 'athlete'
       })
     })
     .then(() => {
