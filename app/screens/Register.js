@@ -13,7 +13,7 @@ class Register extends Component {
       lastName: null,
       emailAddress: null,
       password: null,
-      teamName: null,
+      teamName: null
     };
   }
 
@@ -24,26 +24,36 @@ class Register extends Component {
   }
 
   handleNewUser() {
-    firebase.auth().createUserWithEmailAndPassword(this.state.emailAddress, this.state.password)
-      .catch((error) => {
-        console.log(error);
-        alert('All fields required. Make sure password is at least 6 characters.');
+    const { firstName, lastName, emailAddress, password, teamName } = this.state
+    const currentUser = firebase.auth().currentUser
+    const uid = currentUser.uid;
+    console.log(currentUser);
+
+    firebase.auth().createUserWithEmailAndPassword(emailAddress, password)
+    .catch((error) => {
+      console.log(error);
+      alert('All fields required. Make sure password is at least 6 characters.');
+    })
+    .then(() => {
+      firebase.database().ref('users').push({
+        emailAddress: emailAddress,
+        firstName: firstName,
+        lastName: lastName,
+        teamName: teamName
       })
-      .then(() => { firebase.database().ref('users').push({
-          emailAddress: this.state.emailAddress,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          teamName: this.state.teamName,
-        })
-      })
-      .then(() => {
-        firebase.database().ref(`teams/${this.state.teamName.toLowerCase().trim()}/athletes/`).push({
-          emailAddress: this.state.emailAddress,
-          firstName:    this.state.firstName,
-          lastName:     this.state.lastName,
-          teamName:     this.state.teamName
+    })
+    .then(() => {
+      firebase.database().ref(`teams/${teamName.toLowerCase()}/athletes/`).push({
+        emailAddress: emailAddress,
+        firstName: firstName,
+        lastName: lastName,
+        teamName: teamName,
+        uid: uid
       });
     })
+    .then(() => {
+      this.goToSwimmerDashboard();
+    });
   }
 
   focusNextField(nextField){
@@ -120,20 +130,10 @@ class Register extends Component {
           <TouchableHighlight
             ref="6"
             style={styles.button}
-            onPress={() => {
-                this.handleNewUser();
-                this.goToSwimmerDashboard();
-            }}
+            onPress={() => this.handleNewUser() }
           >
             <Text>Register</Text>
           </TouchableHighlight>
-          <Text>
-            {this.state.firstName}
-            {this.state.lastName}
-            {this.state.emailAddress}
-            {this.state.password}
-            {this.state.teamName}
-            </Text>
         </ScrollView>
       </View>
     )
