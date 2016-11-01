@@ -50,6 +50,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#fff',
     backgroundColor: 'transparent'
+  },
+  h1Font: {
+    padding: 5,
+    fontSize: 18,
+    color: '#3c2eb0',
+    backgroundColor: 'transparent'
   }
 });
 

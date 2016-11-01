@@ -26,12 +26,9 @@ class Register extends Component {
   handleNewUser() {
     const { firstName, lastName, emailAddress, password, teamName } = this.state
     const currentUser = firebase.auth().currentUser
-    const uid = currentUser.uid;
-    console.log(currentUser);
 
     firebase.auth().createUserWithEmailAndPassword(emailAddress, password)
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
       alert('All fields required. Make sure password is at least 6 characters.');
     })
     .then(() => {
@@ -48,7 +45,6 @@ class Register extends Component {
         firstName: firstName,
         lastName: lastName,
         teamName: teamName,
-        uid: uid
       });
     })
     .then(() => {
