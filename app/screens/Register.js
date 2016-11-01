@@ -6,12 +6,12 @@ const styles = require('../styles.js');
 const constants = styles.constants;
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: null,
       lastName: null,
-      emailAddress: null,
+      emailAddress: this.props.emailAddress,
       password: null,
       teamName: null
     };
@@ -19,7 +19,7 @@ class Register extends Component {
 
   goToSwimmerDashboard() {
     return(
-      <SwimmerDashboard ></SwimmerDashboard>
+      <SwimmerDashboard></SwimmerDashboard>
     );
   }
 
@@ -68,7 +68,6 @@ class Register extends Component {
 
   render() {
     return (
-      <View style={styles.containerCenter}>
         <ScrollView style={{marginTop: 100}}>
           <TextInput
             ref="1"
@@ -131,7 +130,6 @@ class Register extends Component {
             <Text>Register</Text>
           </TouchableHighlight>
         </ScrollView>
-      </View>
     )
   }
 }
