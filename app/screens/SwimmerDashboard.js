@@ -3,110 +3,110 @@
 import firebase from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight }  from 'react-native';
+import split from 'split-object';
 const styles = require('../styles.js');
 const constants = styles.constants;
 
 class SwimmerDashboard extends Component {
   constructor(props) {
-     super(props);
-     this.state = {
-       physical: null,
-       mental: null,
-       performance: null,
-       date: Date.now(),
-       user: this.props.user,
-       title: this.props.title
-     };
-   }
+    super(props);
+    this.state = {
+      physical: null,
+      mental: null,
+      performance: null,
+      date: Date.now(),
+      user: null
+    };
+  }
 
-   componentDidMount() {
-     firebase.auth().onAuthStateChanged( user => {
-       if(user){
-         this.setState({user: user.uid});
-       }
-     });
-   }
+  componentDidMount() {
+    firebase.database().ref('users').on('value', (snapshot) => {
+      let users = snapshot.val();
+      split(users).map(user => {
+        if (user.value.emailAddress === this.props.user.email) {
+          users = Object.assign({ key: user.key }, user.value);
+        }
+      });
+      this.setState({user: users});
+    });
+  }
 
-   get reference(){
-     firebase.database()
-      .ref(`teams/${teamPosition}/${team}/athletes/${currentUserId}/${uid}/days`);
-   }
+  handleNewUser() {
+    const { physical, mental, performance, date } = this.state;
+    firebase.database().ref(`workouts/${team}/${date}`).push({
+      physical,
+      mental,
+      performance
+    });
+    // .then(() => { this.goToComplete(); });
+  }
 
-   focusNextField(nextField){
-     this.refs[nextField].focus();
-   }
+  focusNextField(nextField){
+    this.refs[nextField].focus();
+  }
 
-   pushSwimmerData(){
-     reference.push({
-       date: this.state.date,
-       feedback: {
-         mental: this.state.mental,
-         physical: this.state.physical,
-         performance: this.state.performance
-       }
-     });
-   }
-
-   render() {
-     return (
-       <View style={styles.container}>
+  render() {
+    return (
+      console.log('USER: ' + this.state.user),
+      <View style={styles.container}>
         <Text style={styles.swimmerDashboard}>{this.props.title}</Text>
-          <Text>Physical</Text>
-          <TextInput
-            ref="1"
-            style={styles.newUserInput}
-            onChangeText={(rating) => this.setState({physical: rating})}
-            value={this.state.physical}
-            placeholder="Rating between 1 and 5"
-            keyboardType="numeric"
-            returnKeyType="next"
-            onSubmitEditing={() => this.focusNextField('2')}
-            autoCapitalize="none"
-          />
-          <Text>Mental</Text>
-          <TextInput
-            ref="2"
-            style={styles.newUserInput}
-            onChangeText={(rating) => this.setState({mental: rating})}
-            value={this.state.mental}
-            placeholder="Rating between 1 and 5"
-            keyboardType="numeric"
-            returnKeyType="next"
-            onSubmitEditing={() => this.focusNextField('3')}
-            autoCapitalize="none"
-          />
-          <Text>Effort</Text>
-          <TextInput
-            ref="2"
-            style={styles.newUserInput}
-            onChangeText={(rating) => this.setState({performance: rating})}
-            value={this.state.performance}
-            placeholder="Rating between 1 and 5"
-            keyboardType="numeric"
-            returnKeyType="done"
-            onSubmitEditing={() => this.focusNextField('submit')}
-            autoCapitalize="none"
-          />
-          <TouchableHighlight
-            ref="submit"
-            style={styles.button}
-          >
-            <Text>Submit</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => {
-              firebase.auth().signOut();
-            }}
-          >
-            <Text>Sign Out</Text>
-          </TouchableHighlight>
-          <Text>{this.state.physical}</Text>
-          <Text>{this.state.mental}</Text>
-          <Text>{this.state.performance}</Text>
-          <Text>{this.state.title}</Text>
-          <Text>{this.state.date}</Text>
-          <Text>Current User: {this.props.user.email}</Text>
+        <Text>Physical</Text>
+        <TextInput
+          ref="1"
+          style={styles.newUserInput}
+          onChangeText={(rating) => this.setState({physical: rating})}
+          value={this.state.physical}
+          placeholder="Rating between 1 and 5"
+          keyboardType="numeric"
+          returnKeyType="next"
+          onSubmitEditing={() => this.focusNextField('2')}
+          autoCapitalize="none"
+        />
+        <Text>Mental</Text>
+        <TextInput
+          ref="2"
+          style={styles.newUserInput}
+          onChangeText={(rating) => this.setState({mental: rating})}
+          value={this.state.mental}
+          placeholder="Rating between 1 and 5"
+          keyboardType="numeric"
+          returnKeyType="next"
+          onSubmitEditing={() => this.focusNextField('3')}
+          autoCapitalize="none"
+        />
+        <Text>Effort</Text>
+        <TextInput
+          ref="2"
+          style={styles.newUserInput}
+          onChangeText={(rating) => this.setState({performance: rating})}
+          value={this.state.performance}
+          placeholder="Rating between 1 and 5"
+          keyboardType="numeric"
+          returnKeyType="done"
+          onSubmitEditing={() => this.focusNextField('submit')}
+          autoCapitalize="none"
+        />
+        <TouchableHighlight
+          ref="submit"
+          style={styles.button}
+        >
+          <Text>Submit</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => {
+            firebase.auth().signOut();
+          }}
+        >
+          <Text>Sign Out</Text>
+        </TouchableHighlight>
+        <Text>Physical: {this.state.physical || 'N/A'}</Text>
+        <Text>Mental: {this.state.mental || 'N/A'}</Text>
+        <Text>Performance: {this.state.performance || 'N/A'}</Text>
+        <Text>Date: {this.state.date}</Text>
+        <Text>Current User: {this.props.user.email}</Text>
+        <Text>Current User: {this.state.user ? this.state.user.firstName : 'N/A'}</Text>
+
       </View>
     );
   }

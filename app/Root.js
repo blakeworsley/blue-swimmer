@@ -9,17 +9,23 @@ export default class blueSwimmer extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: null,
     };
   }
 
+  get reference() {
+    const { user } = this.state;
+    return firebase.database().ref('users').child(user.uid);
+  }
+
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {this.setState({user}); });
+    firebase.auth().onAuthStateChanged( (user) =>  {
+      this.setState({user});
+    });
   }
 
   render() {
     const {user} = this.state;
-
     return(
       <Image source={require('./img/wave_background.png')} style={styles.waveImage}>
         <View style={styles.container}>
@@ -28,5 +34,4 @@ export default class blueSwimmer extends Component {
       </Image>
     );
   }
-
 }

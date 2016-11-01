@@ -19,7 +19,7 @@ class Register extends Component {
 
   goToSwimmerDashboard() {
     return(
-      <SwimmerDashboard></SwimmerDashboard>
+      <SwimmerDashboard ></SwimmerDashboard>
     );
   }
 
