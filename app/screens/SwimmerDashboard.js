@@ -33,12 +33,12 @@ class SwimmerDashboard extends Component {
 
   sendData() {
     const { physical, mental, performance, date, user } = this.state;
-    firebase.database().ref(`workouts/${user.teamName}/${user.key}/${date}`).push({
+    const userWorkoutRef = `workouts/${user.teamName.toLowerCase()}/${user.firstName.toLowerCase()}-${user.lastName.toLowerCase()}/${date}`;
+    firebase.database().ref(userWorkoutRef).push({
       physical,
       mental,
       performance
     });
-    // .then(() => { this.goToComplete(); });
   }
 
   focusNextField(nextField){
