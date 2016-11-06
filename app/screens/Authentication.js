@@ -12,12 +12,14 @@ export default class Authentication extends Component {
       user: null,
       emailAddress: null,
       password: null,
-      register: false
+      register: false,
     };
   }
 
   toggleRegisterComponent() {
-    this.state.register ? this.setState({register: false}) : this.setState({register: true});
+    debugger;
+    if (this.state.register) {this.setState({register: false});}
+    else {this.setState({register: true});}
   }
 
   checkForFullFields(){
@@ -36,7 +38,7 @@ export default class Authentication extends Component {
 
   render() {
     if(this.state.register) {
-      return( <Register emailAddress={this.state.emailAddress} back={this.toggleRegisterComponent}/> );
+      return( <Register emailAddress={this.state.emailAddress} back={() => {this.toggleRegisterComponent()}}/> );
       };
     return (
       <View style={styles.container}>
@@ -76,7 +78,6 @@ export default class Authentication extends Component {
           <Text style={styles.buttonText}>Register</Text>
         </TouchableHighlight>
       </View>
-
     );
   }
 }

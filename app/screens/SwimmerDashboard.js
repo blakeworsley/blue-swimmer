@@ -4,6 +4,7 @@ import firebase from '../firebase';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight }  from 'react-native';
 import split from 'split-object';
+const Submit = require('./Submit');
 const styles = require('../styles.js');
 const constants = styles.constants;
 
@@ -15,7 +16,8 @@ class SwimmerDashboard extends Component {
       mental: null,
       performance: null,
       date: Date.now(),
-      user: null
+      user: null,
+      submitted: false,
     };
   }
 
@@ -33,12 +35,19 @@ class SwimmerDashboard extends Component {
 
   sendData() {
     const { physical, mental, performance, date, user } = this.state;
-    const userWorkoutRef = `workouts/${user.teamName.toLowerCase()}/${user.firstName.toLowerCase()}-${user.lastName.toLowerCase()}/${date}`;
+    const userWorkoutRef = `workouts/${user.teamName.toLowerCase()}/${user.firstName.toLowerCase()}-${user.lastName.toLowerCase()}`;
     firebase.database().ref(userWorkoutRef).push({
+      date,
       physical,
       mental,
       performance
-    });
+    })
+    .then(this.setState({physical: null, mental: null, performance: null, date: Date.now()}))
+    .then(() => { this.toggleSubmitedComponent(); });
+  }
+
+  toggleSubmitedComponent() {
+    this.state.submitted ? this.setState({submitted: false}) : this.setState({submitted: true});
   }
 
   focusNextField(nextField){
@@ -46,6 +55,9 @@ class SwimmerDashboard extends Component {
   }
 
   render() {
+    if(this.state.submitted) {
+      return( <Submit back={() => {this.toggleSubmitedComponent()}}/> );
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.swimmerDashboard}>{this.props.title}</Text>
@@ -108,8 +120,6 @@ class SwimmerDashboard extends Component {
         <Text style={styles.regularFont}>Date: {this.state.date}</Text>
         <Text style={styles.regularFont}>Current User: {this.props.user.email}</Text>
         {this.state.user ? <Text style={styles.regularFont}>Team: {this.state.user.teamName}</Text> : null}
-
-
       </View>
     );
   }
