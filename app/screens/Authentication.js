@@ -17,7 +17,6 @@ export default class Authentication extends Component {
   }
 
   toggleRegisterComponent() {
-    debugger;
     if (this.state.register) {this.setState({register: false});}
     else {this.setState({register: true});}
   }
